@@ -25,8 +25,16 @@
                     <h3><%= news.title %></h3>
                     <p><%= news.content %></p>
                     <small><%= news.created_at %></small>
+                    <% if (username) { %>
+                    <div style='margin-top: 10px;'>
+                        <a href="/admmin/news/delete/<%= news.id %>">[編集]</a>
+                        <form action="/admin/news/delete/<%= news.id %>" method="post" style="display: inline;">
+                            <button type="submit" onclick="return confirm('本当に削除しますか');">[削除]</button>
+                        </form>
+                    </div>
+                <% } %>
                   </div>
-                  <hr>
+                  
             <% }); %>
         <% } else { %>
             <p>現在お知らせはありません。</p>

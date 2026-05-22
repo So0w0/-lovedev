@@ -104,10 +104,10 @@ app.post('/admin/news', requireLogin, (req,res) => {
 app.post('/admin/news/delete/:id', requireLogin, (req,res) => {
     const newsId = req.params.id;
     const query = "DELETE FROM news WHERE id = ?";
-    db.run(query, function(err) {
+    db.run(query, [newsId], function(err) {
         if (err) {
             console.error(err);
-            req.status(500).send('編集に失敗しました');
+            res.status(500).send('削除に失敗しました');
         }
         res.redirect('/');
     });
@@ -115,7 +115,7 @@ app.post('/admin/news/delete/:id', requireLogin, (req,res) => {
 app.get('/admin/news/edit/:id', requireLogin, (req,res) => {
     const newsId = req.params.id;
     const query = "SELECT * FROM news WHERE id = ?";
-    db.run(query, [newsId], (err,row) => {
+    db.get(query, [newsId], (err,row) => {
         if (err || !row) {
             res.status(404).send('ニュースが見つかりません');
         }
@@ -125,7 +125,7 @@ app.get('/admin/news/edit/:id', requireLogin, (req,res) => {
 app.post('/admin/news/edit/:id', requireLogin, (req,res) => {
     const newsId = req.params.id;
     const { title, content } = req.body;
-    const query = "IPDATE news SET title = ?, content = ? WHERE id = ?";
+    const query = "UPDATE news SET title = ?, content = ? WHERE id = ?";
     db.run(query, [title,content,newsId], function(err) {
         if (err) {
             console.error(err);
