@@ -1,5 +1,5 @@
 .form-container {
-    max:width: 500px;
+    max-width: 500px;
     margin: 20px 0;
 }
 
@@ -18,7 +18,7 @@
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    border: 1px solied #ccc;
+    border: 1px solid #ccc;
     border-radius: 4px;
 }
 

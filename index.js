@@ -14,20 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true}));
 db.serialize(() => {
    //ユーザー情報のデータベース
    db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)');
-   const insertQuery = `
-   INSERT INTO users (username, password)
-   SELECT 'user', 'password'
-   WHERE NOT EXISTS(SELECT 1 FROM users WHERE username ='user')
-   `;
-   db.run(insertQuery);
    //ニュース管理データベース
    db.run('CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)');
-　 const insertnewsQuery =`
-   INSERT INTO news (title, content)
-   SELECT '=LOVE 非公式ファンサイト開設！', 'サイトがオープンしました。最新情報をお届けします！'
-   WHERE NOT EXISTS(SELECT 1 FROM news WHERE id = 1)
-   `;
-   db.run(insertnewsQuery);
 });
 
 app.use(session({
@@ -132,6 +120,34 @@ app.post('/admin/news/edit/:id', requireLogin, (req,res) => {
             res.status(500).send('更新に失敗しました');
         }
         res.redirect('/');
+    });
+});
+
+app.get('/register', (req,res) => {
+    res.render('register');
+});
+app.post('/legister', (req,res) => {
+    const uname = req.body.uname;
+    const password = req.body.password;
+    const checkQuery = 'SELECT * FROM users WHERE username =?';
+
+    db.get(checkQuery, [username], (err,row) => {
+        if (err) {
+            console.error(err);
+            resstatus(500).send('Database Error');
+        }
+        if (row) {
+            res.send('このユーザー名は既に使用されています。<a href="/register">戻る</a>');
+        }
+        const insertQuery = 'INSERT INTO users (username, password) VALUES (?,?)';
+        db.run(insertQuery, [username, password], function(insertErr) {
+            if (insertErr) {
+                console.error(insertErr);
+                res.send('user register failed');
+            }
+            req.session.username = username;
+            res.redirect('/');
+        });
     });
 });
 

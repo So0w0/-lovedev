@@ -7,7 +7,12 @@
     </head>
     <body>
         <h1>=LOVE UNOFFICIAL SITEへようこそ</h1>
-        <P>Hello <%= username %></P>
+        <% if (username) { %>
+            <P>Hello <%= username %></P>
+        <% } else { %>
+            <p>ゲストさんこんにちは！</p>
+            <p><a href="/login">ログイン</a> | <a href="/register">新規会員登録</a></p>
+        <% } %>
 
         <ul>
             <li><a href="/">home</a></li>
@@ -27,7 +32,7 @@
                     <small><%= news.created_at %></small>
                     <% if (username) { %>
                     <div style='margin-top: 10px;'>
-                        <a href="/admmin/news/delete/<%= news.id %>">[編集]</a>
+                        <a href="/admin/news/edit/<%= news.id %>">[編集]</a>
                         <form action="/admin/news/delete/<%= news.id %>" method="post" style="display: inline;">
                             <button type="submit" onclick="return confirm('本当に削除しますか');">[削除]</button>
                         </form>
