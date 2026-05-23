@@ -126,26 +126,26 @@ app.post('/admin/news/edit/:id', requireLogin, (req,res) => {
 app.get('/register', (req,res) => {
     res.render('register');
 });
-app.post('/legister', (req,res) => {
+app.post('/register', (req,res) => {
     const uname = req.body.uname;
     const password = req.body.password;
     const checkQuery = 'SELECT * FROM users WHERE username =?';
 
-    db.get(checkQuery, [username], (err,row) => {
+    db.get(checkQuery, [uname], (err,row) => {
         if (err) {
             console.error(err);
-            resstatus(500).send('Database Error');
+            return res.status(500).send('Database Error');
         }
         if (row) {
-            res.send('このユーザー名は既に使用されています。<a href="/register">戻る</a>');
+            return res.send('このユーザー名は既に使用されています。<a href="/register">戻る</a>');
         }
         const insertQuery = 'INSERT INTO users (username, password) VALUES (?,?)';
-        db.run(insertQuery, [username, password], function(insertErr) {
+        db.run(insertQuery, [uname, password], function(insertErr) {
             if (insertErr) {
                 console.error(insertErr);
-                res.send('user register failed');
+                return res.send('user register failed');
             }
-            req.session.username = username;
+            req.session.username = uname;
             res.redirect('/');
         });
     });
