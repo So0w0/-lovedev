@@ -8,7 +8,7 @@
     <body>
         <h1>=LOVE UNOFFICIAL SITEへようこそ</h1>
         <% if (username) { %>
-            <P>Hello <%= username %></P>
+            <P>Hello <%= username %> <a href="/logout">ログアウト</a></P>
         <% } else { %>
             <p>ゲストさんこんにちは！</p>
             <p><a href="/login">ログイン</a> | <a href="/register">新規会員登録</a></p>

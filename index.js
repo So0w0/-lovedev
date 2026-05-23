@@ -69,7 +69,7 @@ app.post('/login', (req,res) => {
                 if (isMatch) {
                     req.session.username = row.username;
                     req.session.role = row.role;
-                    res.send('Login Success');
+                    res.send('ログインしました <a href="/">トップページへ</a>');
                 } else {
                     res.send('Login Failed (Incorrect Password)');
                 }
@@ -78,6 +78,15 @@ app.post('/login', (req,res) => {
         } else {
             res.send('Login Failed (Not Found User');
         }
+    });
+});
+app.get('/logout', (req,res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('ログアウトに失敗しました');
+        }
+        res.redirect('/');
     });
 });
 const requireLogin = (req, res, next) => {
@@ -196,7 +205,7 @@ app.post('/profile/edit', requireLogin, (req, res) => {
     const bio = req.body.bio;
     const username = req.session.username;
 
-    const updateQuery = 'UPDATE users SET fav_member = ?, bio = ?, WHERE username = ?';
+    const updateQuery = 'UPDATE users SET fav_member = ?, bio = ? WHERE username = ?';
     db.run(updateQuery, [favMember, bio, username], function(err) {
         if (err) {
             console.error(err);
