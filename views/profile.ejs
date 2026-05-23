@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My Page - =LOVE UNOFFICIAL SITE</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body>
+        <h2>マイページ</h2>
+
+        <div sytle="margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px;">
+            <p><strong>ユーザー名:</strong> <%= user.username %></p>
+            <p><strong>推しメン:</strong> <%= user.fav_member || '未設定' %></p>
+            <p><strong>自己紹介:</strong> <%= user.bio || '未設定' %></p>
+        </div>
+        
+        <h3>プロフィールを編集する</h3>
+        <form action="/prifile/edit" method="post" class="form-container">
+            <div class="form-group">
+                <label for="fav_member">推しメン:</label>
+                <select id="fav_member" name="fav_member" style="width: 100%; padding: 8px;">
+                    <option value="">選択してください</option>
+                        <option value="大谷 映美里" <%= user.fav_member==='大谷 映美里' ? 'selected' : '' %>>大谷 映美里</option>
+                        <option value="大場 花菜" <%= user.fav_member==='大場 花菜' ? 'selected' : '' %>>大場 花菜</option>
+                        <option value="音嶋 莉沙" <%= user.fav_member==='音嶋 莉沙' ? 'selected' : '' %>>音嶋 莉沙</option>
+                        <option value="齋藤 樹愛羅" <%= user.fav_member==='齋藤 樹愛羅' ? 'selected' : '' %>>齋藤 樹愛羅</option>
+                        <option value="佐々木 舞香" <%= user.fav_member==='佐々木 舞香' ? 'selected' : '' %>>佐々木 舞香</option>
+                        <option value="髙松 瞳" <%= user.fav_member==='髙松 瞳' ? 'selected' : '' %>>髙松 瞳</option>
+                        <option value="瀧脇 笙古" <%= user.fav_member==='瀧脇 笙古' ? 'selected' : '' %>>瀧脇 笙古</option>
+                        <option value="野口 衣織" <%= user.fav_member==='野口 衣織' ? 'selected' : '' %>>野口 衣織</option>
+                        <option value="諸橋 沙夏" <%= user.fav_member==='諸橋 沙夏' ? 'selected' : '' %>>諸橋 沙夏</option>
+                        <option value="山本 杏奈" <%= user.fav_member==='山本 杏奈' ? 'selected' : '' %>>山本 杏奈</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="bio">自己紹介:</label>
+                <textarea id="bio" name="bio" rows="4" style="width: 100%; padding: 8px;"><%= user.bio || '' %></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">更新する</button>
+
+        </form>
+        <br>
+        <a href="/">トップページに戻る</a>
+    </body>
+</html>

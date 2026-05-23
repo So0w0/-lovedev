@@ -30,7 +30,11 @@
                     <h3><%= news.title %></h3>
                     <p><%= news.content %></p>
                     <small><%= news.created_at %></small>
-                    <% if (username) { %>
+                    <% if (role === 'admin') { %>
+                        <p><a href='/admin'>ニュースを投稿する（管理者専用）</a></p>
+                    <% } %>
+
+                    <% if (role === 'admin') { %>
                     <div style='margin-top: 10px;'>
                         <a href="/admin/news/edit/<%= news.id %>">[編集]</a>
                         <form action="/admin/news/delete/<%= news.id %>" method="post" style="display: inline;">
