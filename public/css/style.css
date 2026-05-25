@@ -1,3 +1,23 @@
+/*inde.ejs*/
+.title{
+    text-align: center;
+}
+.header{
+    text-align: center;
+}
+.top-profile{
+    text-align: right;
+}
+
+.menu{
+    font-size: 50px;
+    text-align: center;
+    list-style: none;
+    justify-content: center;
+    display: flex;
+    gap: 50px;
+}
+
 .form-container {
     max-width: 500px;
     margin: 20px 0;

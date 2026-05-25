@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>=love unofficial site</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="title">
+        <h1><a href="/"><img src="/img/title.png" alt="=LOVE UNOFFICIAL SITE"></a></h1>
+    </div>
+    <div class="header">
+        <img src="/img/header.png" alt="">
+    </div>
+    <div class="top-profile">
+        <% if (username) { %>
+            <P>Hello <a href="/profile">
+                    <%= username %>
+                </a> <a href="/logout">ログアウト</a></P>
+            <% } else { %>
+                <p>ゲストさんこんにちは！</p>
+                <p><a href="/login">ログイン</a> | <a href="/register">新規会員登録</a></p>
+                <% } %>
+    </div>
+    <nav>
+        <ul class="menu">
+            <li><a href="/">home</a></li>
+            <li><a href="news">news</a></li>
+            <li><a href="about">about</a></li>
+            <li><a href="video">video</a></li>
+            <li><a href="photo">photo</a></li>
+            <li><a href="login">login</a></li>
+        </ul>
+    </nav>
+    <h2><a href='news'>News</a></h2>
+    <div class="news-container">
+        <% if (newsList && newsList.length> 0){ %>
+            <% newsList.forEach(function(news) { %>
+                <div class="news-item">
+                    <h3>
+                        <%= news.title %>
+                    </h3>
+                    <p>
+                        <%= news.content %>
+                    </p>
+                    <small>
+                        <%= news.created_at %>
+                    </small>
+                    <% if (role==='admin' ) { %>
+                        <p><a href='/admin'>ニュースを投稿する（管理者専用）</a></p>
+                        <% } %>
+
+                            <% if (role==='admin' ) { %>
+                                <div style='margin-top: 10px;'>
+                                    <a href="/admin/news/edit/<%= news.id %>">[編集]</a>
+                                    <form action="/admin/news/delete/<%= news.id %>" method="post"
+                                        style="display: inline;">
+                                        <button type="submit" onclick="return confirm('本当に削除しますか');">[削除]</button>
+                                    </form>
+                                </div>
+                                <% } %>
+                </div>
+
+                <% }); %>
+                    <% } else { %>
+                        <p>現在お知らせはありません。</p>
+                        <% } %>
+    </div>
+    <p>&copy;Copyright sosasaki All rights reserved.</p>
+</body>
+
+</html>

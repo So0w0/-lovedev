@@ -45,6 +45,20 @@ app.get('/', (req,res) => {
         });
     });
 });
+app.get('/news', (req, res) => {
+    const query = 'SELECT * FROM news ORDER BY created_at DESC';
+    db.all(query, [], (err,rows) => {
+        if (err) {
+            console.error(err)
+            res.status(500).send('Database Error');
+        }
+        res.render('news', {
+            newsList: rows,
+            username: req.session.username,
+            role: req.session.role       
+        });
+    });
+});
 app.get('/about', (req,res) => {
     res.render('about');
 });
